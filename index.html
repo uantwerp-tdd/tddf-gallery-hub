@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TDD Fundamentals Pipeline — Class Gallery</title>
+  <style>
+    :root {
+      --bg: #0f0f10;
+      --fg: #f4f4f5;
+      --card: #1a1a1c;
+      --accent: #5b8cff;
+      --muted: #9a9aa2;
+      --border: #2a2a2d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      padding: 2rem 1.5rem 4rem;
+    }
+    header { max-width: 1100px; margin: 0 auto 2rem; }
+    header h1 { margin: 0 0 0.25rem; font-size: 1.75rem; }
+    header p { color: var(--muted); margin: 0; }
+
+    .controls {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .controls input, .controls select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    .controls input { flex: 1; min-width: 180px; }
+
+    .stats {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .card h3 { margin: 0; font-size: 1rem; }
+    .card .id { color: var(--muted); font-size: 0.75rem; margin: -0.25rem 0 0; }
+    .card .challenge { font-size: 0.85rem; color: var(--muted); flex: 1; margin: 0.25rem 0; }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(91, 140, 255, 0.15);
+      color: var(--accent);
+      width: fit-content;
+    }
+    .links { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
+    .links a {
+      flex: 1;
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+    .links a.primary { background: var(--accent); border-color: var(--accent); color: white; }
+    .links a:hover { opacity: 0.85; }
+
+    .empty {
+      max-width: 1100px;
+      margin: 3rem auto;
+      text-align: center;
+      color: var(--muted);
+    }
+    .empty a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Fundamentals Pipeline — class gallery</h1>
+    <p>Technology-Driven Design, University of Antwerp. Every card is a live student interface — click through.</p>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search by name or challenge..." />
+    <select id="filter-model">
+      <option value="">All model types</option>
+      <option value="Teachable Machine">Teachable Machine</option>
+      <option value="Roboflow">Roboflow</option>
+    </select>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="empty" id="empty" style="display:none;">
+    No submissions yet. Want to add yours?
+    <a href="./CONTRIBUTING.md">See how to add your project</a>.
+  </div>
+
+  <script>
+    let students = [];
+
+    function render(list) {
+      const grid = document.getElementById("grid");
+      const empty = document.getElementById("empty");
+      grid.innerHTML = "";
+
+      if (list.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      list.forEach(s => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <span class="badge">${escapeHtml(s.modelType || "")}</span>
+          <h3>${escapeHtml(s.name || "Unnamed")}</h3>
+          <p class="id">${escapeHtml(s.studentId || "")}</p>
+          <p class="challenge">${escapeHtml(s.challenge || "")}</p>
+          <div class="links">
+            <a class="primary" href="${escapeAttr(s.pagesUrl)}" target="_blank" rel="noopener">Live demo</a>
+            <a href="${escapeAttr(s.repoUrl)}" target="_blank" rel="noopener">Repo</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str || "";
+      return div.innerHTML;
+    }
+    function escapeAttr(str) {
+      return (str || "#").replace(/"/g, "%22");
+    }
+
+    function applyFilters() {
+      const q = document.getElementById("search").value.toLowerCase();
+      const model = document.getElementById("filter-model").value;
+      const filtered = students.filter(s => {
+        const matchesQuery = !q ||
+          (s.name || "").toLowerCase().includes(q) ||
+          (s.challenge || "").toLowerCase().includes(q);
+        const matchesModel = !model || s.modelType === model;
+        return matchesQuery && matchesModel;
+      });
+      render(filtered);
+      document.getElementById("stats").textContent =
+        `${filtered.length} of ${students.length} submissions shown`;
+    }
+
+    document.getElementById("search").addEventListener("input", applyFilters);
+    document.getElementById("filter-model").addEventListener("change", applyFilters);
+
+    fetch("./data/students.json")
+      .then(r => r.json())
+      .then(data => {
+        students = data.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+        applyFilters();
+      })
+      .catch(err => {
+        document.getElementById("stats").textContent = "Could not load data/students.json — " + err;
+      });
+  </script>
+</body>
+</html>
