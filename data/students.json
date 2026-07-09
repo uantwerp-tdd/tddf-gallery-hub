@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "name": "Test entry",
+    "repoUrl": "https://github.com/TDDF-UA/test-delete-me",
+    "pagesUrl": "https://tddf-ua.github.io/test-delete-me/",
+    "modelType": "Teachable Machine",
+    "challenge": "Identify a held object by voice, for a low-vision use case"
+  }
+]
