@@ -67,7 +67,6 @@
       gap: 0.5rem;
     }
     .card h3 { margin: 0; font-size: 1rem; }
-    .card .id { color: var(--muted); font-size: 0.75rem; margin: -0.25rem 0 0; }
     .card .challenge { font-size: 0.85rem; color: var(--muted); flex: 1; margin: 0.25rem 0; }
     .badge {
       display: inline-block;
@@ -146,7 +145,6 @@
         card.innerHTML = `
           <span class="badge">${escapeHtml(s.modelType || "")}</span>
           <h3>${escapeHtml(s.name || "Unnamed")}</h3>
-          <p class="id">${escapeHtml(s.studentId || "")}</p>
           <p class="challenge">${escapeHtml(s.challenge || "")}</p>
           <div class="links">
             <a class="primary" href="${escapeAttr(s.pagesUrl)}" target="_blank" rel="noopener">Live demo</a>

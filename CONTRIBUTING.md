@@ -18,14 +18,19 @@ how open-source contributions work in the real world.
 
    ```json
    {
-     "name": "Your Full Name",
-     "studentId": "sXXXXXXX",
+     "name": "Whatever name you want shown publicly",
      "repoUrl": "https://github.com/<you>/<your-repo>",
      "pagesUrl": "https://<you>.github.io/<your-repo>/",
      "modelType": "Teachable Machine",
      "challenge": "One sentence describing your challenge/component."
    }
    ```
+
+   `name` can be your real name, a handle, whatever you'd want attached
+   to a public portfolio piece — this page is public and searchable, so
+   don't put your student ID or anything else here you wouldn't want
+   indexed by Google. (Your student ID still goes in your Blackboard
+   report, same as always — that's the access-controlled place for it.)
 
    `modelType` must be exactly `"Teachable Machine"` or `"Roboflow"`.
 
