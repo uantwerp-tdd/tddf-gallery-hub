@@ -4,8 +4,8 @@ validate_students_json.py — schema check for data/students.json.
 
 Run automatically by .github/workflows/validate.yml on every pull
 request. Exits non-zero (fails the check) if the file isn't valid JSON,
-a required field is missing, a URL doesn't look like a URL, or there
-are duplicate studentIds.
+a required field is missing, a URL doesn't look like a URL, or the same
+repoUrl appears twice.
 
 Also runnable locally: python scripts/validate_students_json.py
 """
@@ -14,7 +14,7 @@ import json
 import re
 import sys
 
-REQUIRED_FIELDS = ["name", "studentId", "repoUrl", "pagesUrl", "modelType", "challenge"]
+REQUIRED_FIELDS = ["name", "repoUrl", "pagesUrl", "modelType", "challenge"]
 VALID_MODEL_TYPES = {"Teachable Machine", "Roboflow"}
 GITHUB_REPO_RE = re.compile(r"^https://github\.com/[^/\s]+/[^/\s]+/?$")
 PAGES_URL_RE = re.compile(r"^https://[^/\s]+\.github\.io/.*$")
@@ -41,7 +41,7 @@ def main():
         sys.exit(1)
 
     errors = []
-    seen_ids = {}
+    seen_repos = {}
     for i, entry in enumerate(entries):
         label = entry.get("name", f"entry #{i}") if isinstance(entry, dict) else f"entry #{i}"
 
@@ -67,12 +67,13 @@ def main():
         if entry.get("pagesUrl") and not PAGES_URL_RE.match(entry["pagesUrl"]):
             errors.append(f"{label}: pagesUrl doesn't look like https://<owner>.github.io/...")
 
-        sid = entry.get("studentId")
-        if sid:
-            if sid in seen_ids:
-                errors.append(f"{label}: duplicate studentId '{sid}' (also used by {seen_ids[sid]})")
+        repo = entry.get("repoUrl")
+        if repo:
+            repo_key = repo.strip().lower().rstrip("/")
+            if repo_key in seen_repos:
+                errors.append(f"{label}: this repoUrl is already used by {seen_repos[repo_key]}")
             else:
-                seen_ids[sid] = label
+                seen_repos[repo_key] = label
 
     if errors:
         for e in errors:
