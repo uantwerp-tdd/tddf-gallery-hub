@@ -6,4 +6,12 @@
     "modelType": "Teachable Machine",
     "challenge": "Identify a held object by voice, for a low-vision use case"
   }
+
+  {
+  "name": "Big screen",
+  "repoUrl": "https://github.com/TDDF-UA/big-screen",
+  "pagesUrl": "https://tddf-ua.github.io/big-screen/",
+  "modelType": "Teachable Machine",
+  "challenge": "Identifies [your object classes here] — full-screen camera with captioned voice output"
+}
 ]
