@@ -11,5 +11,33 @@
   "pagesUrl": "https://tddf-ua.github.io/big-screen/",
   "modelType": "Teachable Machine",
   "challenge": "Identifies [your object classes here] — full-screen camera with captioned voice output"
+},
+  {
+  "name": "Confidence ring",
+  "repoUrl": "https://github.com/TDDF-UA/confidence-ring",
+  "pagesUrl": "https://tddf-ua.github.io/confidence-ring/",
+  "modelType": "Teachable Machine",
+  "challenge": "Identifies [your classes] — circular gauge shows confidence building toward an answer"
+},
+{
+  "name": "Audio-first",
+  "repoUrl": "https://github.com/TDDF-UA/audio-first",
+  "pagesUrl": "https://tddf-ua.github.io/audio-first/",
+  "modelType": "Teachable Machine",
+  "challenge": "Identifies [your classes] — no camera shown, one word, one button"
+},
+{
+  "name": "Session log",
+  "repoUrl": "https://github.com/TDDF-UA/session-log",
+  "pagesUrl": "https://tddf-ua.github.io/session-log/",
+  "modelType": "Teachable Machine",
+  "challenge": "Identifies [your classes] — scrollable history of everything identified this session"
+},
+{
+  "name": "Settings panel",
+  "repoUrl": "https://github.com/TDDF-UA/settings-panel",
+  "pagesUrl": "https://tddf-ua.github.io/settings-panel/",
+  "modelType": "Teachable Machine",
+  "challenge": "Identifies [your classes] — adjustable text size, contrast, and speech rate"
 }
 ]
