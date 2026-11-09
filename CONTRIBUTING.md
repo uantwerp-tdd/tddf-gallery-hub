@@ -18,7 +18,7 @@ how open-source contributions work in the real world.
 
    ```json
    {
-     "name": "Whatever name you want shown publicly",
+     "name": "A handle that does not identify you",
      "repoUrl": "https://github.com/<you>/<your-repo>",
      "pagesUrl": "https://<you>.github.io/<your-repo>/",
      "modelType": "Teachable Machine",
@@ -26,16 +26,16 @@ how open-source contributions work in the real world.
    }
    ```
 
-   `name` can be your real name, a handle, whatever you'd want attached
-   to a public portfolio piece — this page is public and searchable, so
-   don't put your student ID or anything else here you wouldn't want
-   indexed by Google. (Your student ID still goes in your Blackboard
-   report, same as always — that's the access-controlled place for it.)
+   `name` must be a handle, not your real name. Nothing on GitHub may
+   identify you: no name, student ID, e-mail address or photo, and use a
+   GitHub username that does not contain your name. This page is public
+   and searchable. Your link reaches the instructor only through your
+   submission document and your Blackboard submission.
 
    `modelType` must be exactly `"Teachable Machine"` or `"Roboflow"`.
 
 5. Scroll down to **"Propose changes"**. Write a commit message like
-   `Add <your name>`.
+   `Add <your handle>`.
 6. Click **Propose changes**, then **Create pull request** on the next
    screen.
 7. A check will run automatically and tell you within ~30 seconds
